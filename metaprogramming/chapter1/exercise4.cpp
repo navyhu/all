@@ -14,7 +14,6 @@ struct type_descriptor_helper<int>
 	{
 		value = "int";
 	}
-	typedef int type;
 	std::string value;
 };
 
@@ -25,7 +24,6 @@ struct type_descriptor_helper<char>
 	{
 		value = "char";
 	}
-	typedef int type;
 	std::string value;
 };
 
@@ -36,7 +34,6 @@ struct type_descriptor_helper<short>
 	{
 		value = "short";
 	}
-	typedef int type;
 	std::string value;
 };
 
@@ -47,7 +44,6 @@ struct type_descriptor_helper<long>
 	{
 		value = "long";
 	}
-	typedef int type;
 	std::string value;
 };
 
@@ -59,7 +55,6 @@ struct type_descriptor_helper<T*>
 		value = mtype.value + "*";
 	}
 	type_descriptor_helper<T> mtype;
-	typedef T type;
 	std::string value;
 };
 
@@ -71,7 +66,6 @@ struct type_descriptor_helper<T&>
 		value = mtype.value + "&";
 	}
 	type_descriptor_helper<T> mtype;
-	typedef T type;
 	std::string value;
 };
 
