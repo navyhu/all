@@ -1,13 +1,13 @@
-targets=bin/tpractice1 bin/tmorepractice1
+CFLAGS='-std=c++11'
+CC=g++
+targets=practice1 morepractice1 exercise2
+sources=practice1.cpp morepractice1.cpp exercise2.cpp
 
-sources=practice1.cpp morepractice1.cpp
-
-all:$(targets)
-
-$(targets):$(sources)
-	g++ -std=c++11 -o $@ $<
+all:
+	-mkdir bin
+	for i in $(targets); do $(CC) $(CFLAGS) -o bin/$$i $$i.cpp; done
 
 clean:
-	rm -f $(targets)
+	rm -fR bin
 
 .PHONY:clean all
