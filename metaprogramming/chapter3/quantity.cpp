@@ -10,7 +10,10 @@ int main(int argc, char** argv)
 
 	hahu::quantity<float, hahu::force> f = m * a;
 
-	//hahu::quantity<float hahu::time> t = m * a;
+	hahu::quantity<float, hahu::length> l(5.0f);
+	hahu::quantity<float, hahu::time> t(2.0f);
+
+	hahu::quantity<float, hahu::velocity> v = l / t;
 
 	std::cout<<"force = "<<(m * a).value()<<std::endl;
 }
