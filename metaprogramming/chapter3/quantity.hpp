@@ -4,10 +4,11 @@
 #include <boost/mpl/equal.hpp>
 #include <boost/mpl/plus.hpp>
 #include <boost/mpl/minus.hpp>
+#include <boost/mpl/placeholders.hpp>
 #include <boost/static_assert.hpp>
 
 namespace mpl = boost::mpl;
-//using namespace boost;
+using namespace mpl::placeholders;
 
 namespace hahu
 {
@@ -69,35 +70,20 @@ operator-(quantity<T, D> x, quantity<T, D> y)
 }
 
 // multiply operator
-struct plus_f
-{
-	template <class T1, class T2>
-	struct apply
-	{
-		typedef typename mpl::plus<T1, T2>::type type;
-	};
-};
-
 template <class T, class D1, class D2>
-quantity<T, typename mpl::transform<D1, D2, plus_f>::type>
+quantity<T, typename mpl::transform<D1, D2, mpl::plus<_1, _2> >::type>
 operator*(quantity<T, D1> x, quantity<T, D2> y)
 {
-	typedef typename mpl::transform<D1, D2, plus_f>::type dim;
+	typedef typename mpl::transform<D1, D2, mpl::plus<_1, _2> >::type dim;
 	return quantity<T, dim>(x.value() * y.value());
 }
 
 // division operator
-struct minus_f
-{
-	template <class T1, class T2>
-	struct apply : mpl::minus<T1, T2> { };
-};
-
 template <class T, class D1, class D2>
-quantity<T, typename mpl::transform<D1, D2, minus_f>::type>
+quantity<T, typename mpl::transform<D1, D2, mpl::minus<_1, _2> >::type>
 operator/(quantity<T, D1> x, quantity<T, D2> y)
 {
-	typedef typename mpl::transform<D1, D2, minus_f>::type dim;
+	typedef typename mpl::transform<D1, D2, mpl::minus<_1, _2> >::type dim;
 	return quantity<T, dim>(x.value() / y.value());
 }
 
