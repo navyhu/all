@@ -61,6 +61,13 @@ operator+(quantity<T, D> x, quantity<T, D> y)
 	return quantity<T, D>(x.value() + y.value());
 }
 
+template <class T, class D1, class D2>
+quantity<T, D1>
+operator+(quantity<T, D1> x, quantity<T, D2> y)
+{
+	return quantity<T, D1>(x.value() + y.value());
+}
+
 // minus operator 
 template <class T, class D>
 quantity<T, D>
@@ -69,22 +76,35 @@ operator-(quantity<T, D> x, quantity<T, D> y)
 	return quantity<T, D>(x.value() - y.value());
 }
 
-// multiply operator
 template <class T, class D1, class D2>
-quantity<T, typename mpl::transform<D1, D2, mpl::plus<_1, _2> >::type>
+quantity<T, D1>
+operator-(quantity<T, D1> x, quantity<T, D2> y)
+{
+	return quantity<T, D1>(x.value() - y.value());
+}
+
+// multiply operator
+template <class D1, class D2>
+struct multiple_dimensions : mpl::transform<D1, D2, mpl::plus<_1, _2> >
+{ };
+
+template <class T, class D1, class D2>
+quantity<T, typename multiple_dimensions<D1, D2>::type>
 operator*(quantity<T, D1> x, quantity<T, D2> y)
 {
-	typedef typename mpl::transform<D1, D2, mpl::plus<_1, _2> >::type dim;
-	return quantity<T, dim>(x.value() * y.value());
+	return quantity<T, typename multiple_dimensions<D1, D2>::type>(x.value() * y.value());
 }
 
 // division operator
+template <class D1, class D2>
+struct divide_dimensions : mpl::transform<D1, D2, mpl::minus<_1, _2> >
+{ };
+
 template <class T, class D1, class D2>
-quantity<T, typename mpl::transform<D1, D2, mpl::minus<_1, _2> >::type>
+quantity<T, typename divide_dimensions<D1, D2>::type>
 operator/(quantity<T, D1> x, quantity<T, D2> y)
 {
-	typedef typename mpl::transform<D1, D2, mpl::minus<_1, _2> >::type dim;
-	return quantity<T, dim>(x.value() / y.value());
+	return quantity<T, typename divide_dimensions<D1, D2>::type>(x.value() / y.value());
 }
 
 } // namespace hahu

@@ -11,6 +11,10 @@ int main(int argc, char** argv)
 
 	hahu::quantity<float, hahu::force> f = m * a;
 
+	f = f + m * a;
+
+	f = m * a + f;
+
 	hahu::quantity<float, hahu::mass> m2 = f / a;
 
 	hahu::quantity<float, hahu::length> l(5.0f);
